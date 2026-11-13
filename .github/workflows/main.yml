@@ -1,0 +1,39 @@
+name: Java CI & Code Coverage (>80%)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-verify-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Locate pom.xml and Run Maven Verify (>80% JaCoCo Coverage)
+        run: |
+          POM_FILE=$(find . -name "pom.xml" | head -n 1)
+          PROJECT_DIR=$(dirname "$POM_FILE")
+          echo "Found project directory at: $PROJECT_DIR"
+          cd "$PROJECT_DIR"
+          chmod +x mvnw
+          ./mvnw clean verify -B -Duser.timezone=UTC
+
+      - name: Upload JaCoCo Coverage Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-coverage-report
+          path: "**/target/jacoco-report/"
