@@ -7,6 +7,9 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+env:
+  DOCKER_API_VERSION: "1.44"
+
 jobs:
   build-and-verify-coverage:
     runs-on: ubuntu-latest
@@ -22,14 +25,19 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Configure Docker API Version for Testcontainers
+        run: |
+          echo "api.version=1.44" > ~/.docker-java.properties
+          cat ~/.docker-java.properties
+
       - name: Locate pom.xml and Run Maven Verify (>80% JaCoCo Coverage)
         run: |
-          POM_FILE=$(find . -name "pom.xml" | head -n 1)
+          POM_FILE=$(find . -name "pom.xml" | grep -v "__MACOSX" | head -n 1)
           PROJECT_DIR=$(dirname "$POM_FILE")
           echo "Found project directory at: $PROJECT_DIR"
           cd "$PROJECT_DIR"
           chmod +x mvnw
-          ./mvnw clean verify -B -Duser.timezone=UTC
+          ./mvnw clean verify -B -Duser.timezone=UTC -Dapi.version=1.44
 
       - name: Upload JaCoCo Coverage Report Artifact
         if: always()
