@@ -1,0 +1,2 @@
+-Dmaven.repo.local=C:\Users\YOGA\.m2\repo-quarkus
+-Duser.timezone=Asia/Kolkata
