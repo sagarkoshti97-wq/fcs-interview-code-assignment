@@ -61,6 +61,8 @@ logs/
 .pnp.*
 
 # Eclipse
+.metadata/
+**/.metadata/
 .project
 .classpath
 .settings/
