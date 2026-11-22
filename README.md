@@ -2,7 +2,7 @@
 
 ![Java CI & Code Coverage (>80%)](https://github.com/sagarkoshti97-wq/fcs-interview-code-assignment/actions/workflows/main.yml/badge.svg)
 
-![Architecture Overview](https://github.com/sagarkoshti97-wq/fcs-interview-code-assignment/docs/java-assignment/screenshots/architecture-overview.png)
+![Architecture Overview](docs/screenshots/architecture-overview.png)
 
 ## Project & Documentation Links
 * **Assignment Specification:** [java-assignment/CODE_ASSIGNMENT.md](java-assignment/CODE_ASSIGNMENT.md)
